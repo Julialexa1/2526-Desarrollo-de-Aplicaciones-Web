@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 3 - Página Web con HTML5</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenidos a mi Página Web</h1>
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#articulo">Artículo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="inicio">
+            <h2>Introducción al Desarrollo Web</h2>
+            <p>El desarrollo web moderno utiliza <strong>HTML5</strong> y <em>CSS3</em> para crear sitios atractivos y funcionales.</p>
+            <img src="img/imagenweb.png" alt="Ejemplo de desarrollo web" width="400">
+        </section>
+
+        <section id="articulo">
+            <article>
+                <h3>Ventajas del uso de HTML5</h3>
+                <p>HTML5 permite una estructura más clara del contenido mediante etiquetas semánticas que mejoran la accesibilidad y el posicionamiento web.</p>
+
+                <h3>Lenguajes complementarios</h3>
+                <ul>
+                    <li>HTML - estructura</li>
+                    <li>CSS - diseño</li>
+                    <li>JavaScript - interactividad</li>
+                </ul>
+
+                <h3>Pasos de aprendizaje</h3>
+                <ol>
+                    <li>Aprender etiquetas básicas</li>
+                    <li>Crear estructuras semánticas</li>
+                    <li>Aplicar estilos con CSS</li>
+                </ol>
+
+                <section id="video">
+                <h3>Video de aprendizaje</h3>
+                <p>Este video muestra una introduccion de HTML y CSS.</p>
+
+                    <iframe width="470" height="315" src="https://www.youtube.com/embed/iWfncDG3M90?si=vfor0RHgiXe2p-WG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </section>
+
+            </article>
+        </section>
+
+        <section>
+            <h3>Tabla de recursos</h3>
+            <table border="2">
+                <thead>
+                    <tr>
+                        <th>Recurso</th>
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MDN Web Docs</td>
+                        <td>Documentación oficial sobre desarrollo web.</td>
+                    </tr>
+                    <tr>
+                        <td>W3Schools</td>
+                        <td>Tutoriales prácticos de HTML, CSS y JS.</td>
+                    </tr>
+                    <tr>
+                        <td>GitHub Pages</td>
+                        <td>Herramienta para publicar sitios estáticos en línea.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="contacto">
+            <h3>Formulario de contacto</h3>
+            <form>
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+
+                <label for="correo">Correo electrónico:</label><br>
+                <input type="email" id="correo" name="correo" required><br><br>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Mi Sitio Web. Todos los derechos reservados.</p>
+        <a href="https://developer.mozilla.org/es/" target="_blank">Visita MDN Web Docs</a>
+    </footer>
+</body>
+</html>
