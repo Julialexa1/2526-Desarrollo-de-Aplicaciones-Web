@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galería Interactiva - Semana 5</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>🎨 Galería Interactiva con JavaScript</h1>
+    <p>Agrega, selecciona y elimina imágenes dinámicamente</p>
+  </header>
+
+  <main class="container">
+    <section class="controls">
+      <input type="url" id="imageURL" placeholder="Ingresa la URL de la imagen" required>
+      <button id="addImageBtn">Agregar Imagen</button>
+      <button id="deleteImageBtn">Eliminar Imagen Seleccionada</button>
+    </section>
+
+    <section id="gallery" class="gallery">
+      <img src="img/paisaje 1.jpg" alt="Paisaje 1">
+      <img src="img/paisaje 2.jpg" alt="Paisaje 2">
+      <img src="img/paisaje 3.jpg" alt="Paisaje 3">
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 Galería Interactiva creada por Julisa Grefa | JavaScript + DOM</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

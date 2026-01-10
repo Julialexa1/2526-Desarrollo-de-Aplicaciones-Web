@@ -1,0 +1,97 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #d4ece9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  text-align: center;
+  background-color: #4d9772;
+  color: white;
+  padding: 1.5rem;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+}
+
+.container {
+  width: 90%;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="url"] {
+  flex: 1;
+  min-width: 250px;
+  padding: 10px;
+  border: 2px solid #02478b;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #71723a;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0805ac;
+  transform: scale(1.05);
+}
+
+/* Galería de imágenes */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.gallery img:hover {
+  transform: scale(1.02);
+}
+
+/* Imagen seleccionada */
+.selected {
+  border: 5px solid #ff5733;
+  box-shadow: 0 0 15px rgba(255, 87, 51, 0.7);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  background-color: #e6f0ff;
+  padding: 1rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #02478b;
+}
+
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+  .gallery img {
+    height: 150px;
+  }
+}
