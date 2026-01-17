@@ -1,0 +1,97 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #7458da, #014991);
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.container {
+  background-color: #c0d7db;
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align: center;
+  color: #254668;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Estilos dinámicos */
+input:valid {
+  border-color: #28a745;
+}
+
+input:invalid {
+  border-color: #dc3545;
+}
+
+.error {
+  color: #dc3545;
+  font-size: 0.9rem;
+  margin-top: 3px;
+  height: 16px;
+  display: block;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#btnEnviar {
+  background-color: #004080;
+  color: white;
+}
+
+#btnEnviar:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+}
+
+#btnEnviar:hover:not(:disabled) {
+  background-color: #0066cc;
+  transform: scale(1.05);
+}
+
+#btnReset {
+  background-color: #ff5733;
+  color: white;
+}
+
+#btnReset:hover {
+  background-color: #e64b2e;
+  transform: scale(1.05);
+}
