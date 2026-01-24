@@ -1,0 +1,92 @@
+/* --- Estilo general --- */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0066cc, #004080);
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Contenedor principal --- */
+.container {
+  background-color: #fff;
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 30px 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+h1 {
+  color: #004080;
+  margin-bottom: 10px;
+}
+
+.descripcion {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* --- Lista de productos --- */
+.lista {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.lista li {
+  background-color: #f2f8ff;
+  border-left: 6px solid #004080;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 6px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.lista li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Botón agregar --- */
+.btn {
+  background-color: #004080;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #0066cc;
+  transform: scale(1.05);
+}
+
+/* --- Footer --- */
+footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #e6f0ff;
+  color: #004080;
+  font-size: 0.9rem;
+  margin-top: 40px;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 600px) {
+  .container {
+    margin: 30px 15px;
+    padding: 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
