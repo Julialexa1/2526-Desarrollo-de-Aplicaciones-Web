@@ -1,0 +1,43 @@
+/* Personalización del sitio */
+body {
+  background-color: #f8f9fa;
+}
+
+/* Encabezado */
+.navbar-brand {
+  font-size: 1.5rem;
+  color: #0dcaf0 !important;
+}
+
+h2 {
+  color: #004080;
+}
+
+/* Carrusel */
+.carousel img {
+  height: 400px;
+  object-fit: cover;
+}
+
+/* Tabla */
+.table th {
+  background-color: #004080 !important;
+  color: white;
+}
+
+/* Formulario */
+form input:valid, form textarea:valid {
+  border: 2px solid #28a745;
+}
+
+form input:invalid, form textarea:invalid {
+  border: 2px solid #dc3545;
+}
+
+/* Footer */
+footer a {
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
