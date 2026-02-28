@@ -1,30 +1,32 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ titulo }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <title>{{ titulo or "Cafetería Rosita" }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <header>
-        <h1>☕ Cafetería Rosita</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Inicio</a></li>
-                <li><a href="/productos">Productos</a></li>
-                <li><a href="/about">Acerca de</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <h1>☕ Cafetería Rosita</h1>
+    <nav>
+      <a href="{{ url_for('index') }}">Inicio</a>
+      <a href="{{ url_for('productos') }}">Productos</a>
+      <a href="{{ url_for('inventario') }}">Inventario</a>
+      <a href="{{ url_for('about') }}">Acerca de</a>
+    </nav>
+  </header>
 
-    <main>
-        {% block content %}{% endblock %}
-    </main>
+  <main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="flash {{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
 
-    <footer>
-        <p>📍 Caluma, Bolívar - Ecuador</p>
-        <p>© 2025 Cafetería Rosita | Proyecto Flask</p>
-    </footer>
+  <footer>
+    <p>📍 Caluma, Bolívar — Cafetería Rosita | © 2026</p>
+  </footer>
 </body>
 </html>

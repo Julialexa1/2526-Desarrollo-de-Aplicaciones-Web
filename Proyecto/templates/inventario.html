@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Gestión de Inventario</h2>
+
+<form method="POST" class="form-inline">
+  <label>Nombre:</label><input type="text" name="nombre" required>
+  <label>Tipo:</label><input type="text" name="tipo" required>
+  <label>Cantidad:</label><input type="number" name="cantidad" min="1" required>
+  <label>Precio:</label><input type="number" step="0.01" name="precio" min="0.1" required>
+  <button type="submit">Agregar Producto</button>
+</form>
+
+<hr>
+<h3>Productos Registrados</h3>
+<table class="tabla">
+  <thead>
+    <tr>
+      <th>ID</th><th>Nombre</th><th>Tipo</th><th>Cantidad</th><th>Precio</th><th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in productos %}
+    <tr>
+      <td>{{ p.id }}</td>
+      <td>{{ p.nombre }}</td>
+      <td>{{ p.tipo }}</td>
+      <td>{{ p.cantidad }}</td>
+      <td>${{ "%.2f"|format(p.precio) }}</td>
+      <td>
+        <a href="{{ url_for('editar_producto', id=p.id) }}" class="btn-editar">✏️ Editar</a>
+        <a href="{{ url_for('eliminar_producto', id=p.id) }}" class="btn-eliminar" onclick="return confirm('¿Eliminar este producto?')">🗑️ Eliminar</a>
+      </td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6">No hay productos registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

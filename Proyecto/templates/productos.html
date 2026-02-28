@@ -1,23 +1,16 @@
 {% extends "base.html" %}
-
 {% block content %}
-<section>
-    <h2>Menú de Productos</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Producto</th>
-                <th>Precio ($)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in productos %}
-            <tr>
-                <td>{{ item.nombre }}</td>
-                <td>{{ "%.2f"|format(item.precio) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</section>
+<h2>Catálogo de Productos</h2>
+<div class="card-container">
+  {% for p in productos %}
+  <div class="card">
+    <h3>{{ p.nombre }}</h3>
+    <p><strong>Tipo:</strong> {{ p.tipo }}</p>
+    <p><strong>Cantidad:</strong> {{ p.cantidad }}</p>
+    <p><strong>Precio:</strong> ${{ "%.2f"|format(p.precio) }}</p>
+  </div>
+  {% else %}
+  <p>No hay productos registrados.</p>
+  {% endfor %}
+</div>
 {% endblock %}

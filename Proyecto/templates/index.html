@@ -1,9 +1,13 @@
 {% extends "base.html" %}
-
 {% block content %}
-<section>
-    <h2>Bienvenidos a Cafetería Rosita</h2>
-    <p>Disfruta del mejor café y postres caseros en un ambiente acogedor.</p>
-    <img src="https://images.unsplash.com/photo-1511920170033-f8396924c348" alt="Café" width="400">
+<section class="hero">
+  <div class="hero-content">
+    <img src="{{ url_for('static', filename='img/cafeteria-banner.jpg') }}" alt="Cafetería Rosita" class="hero-img">
+    <div class="hero-text">
+      <h2>Bienvenidos a Cafetería Rosita ☕</h2>
+      <p>{{ descripcion }}</p>
+      <a href="{{ url_for('productos') }}" class="btn-cta">Ver Productos</a>
+    </div>
+  </div>
 </section>
 {% endblock %}
