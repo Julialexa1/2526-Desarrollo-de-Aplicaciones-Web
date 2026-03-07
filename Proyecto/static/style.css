@@ -65,3 +65,58 @@ table.tabla { width:100%; border-collapse:collapse; margin-top:10px; }
 .btn-cancelar:hover {
   background-color: #777;
 }
+
+
+.datos-container {
+  max-width: 900px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.datos-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.datos-card h2 {
+  color: #8b5a2b;
+  margin-bottom: 10px;
+}
+
+.datos-card ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.datos-card li {
+  padding: 6px;
+  border-bottom: 1px solid #eee;
+}
+
+/* Botones guardar */
+.btn-txt {
+  background: #6c757d;
+}
+
+.btn-json {
+  background: #007bff;
+}
+
+.btn-csv {
+  background: #28a745;
+}
+
+.btn-txt:hover {
+  background: #5a6268;
+}
+
+.btn-json:hover {
+  background: #0069d9;
+}
+
+.btn-csv:hover {
+  background: #218838;
+}
