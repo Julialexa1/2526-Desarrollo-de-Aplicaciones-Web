@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Productos almacenados en MySQL</h2>
+
+<!-- FORMULARIO AGREGAR PRODUCTO -->
+
+<form action="{{ url_for('mysql_agregar_producto') }}" method="POST">
+
+<label>Nombre:</label>
+<input type="text" name="nombre" required>
+
+<label>Tipo:</label>
+<input type="text" name="tipo" required>
+
+<label>Cantidad:</label>
+<input type="number" name="cantidad" required>
+
+<label>Precio:</label>
+<input type="number" step="0.01" name="precio" required>
+
+<button type="submit">Agregar Producto</button>
+
+</form>
+
+<hr>
+
+<h3>Lista de productos</h3>
+
+<table class="tabla">
+
+<tr>
+<th>ID</th>
+<th>Nombre</th>
+<th>Tipo</th>
+<th>Cantidad</th>
+<th>Precio</th>
+<th>Acciones</th>
+</tr>
+
+{% for producto in productos %}
+
+<tr>
+
+<td>{{ producto.id_productos }}</td>
+<td>{{ producto.nombre }}</td>
+<td>{{ producto.tipo }}</td>
+<td>{{ producto.stock }}</td>
+<td>${{ producto.precio }}</td>
+
+<td>
+
+<a href="{{ url_for('mysql_eliminar', id=producto.id_productos) }}"
+class="btn-eliminar"
+onclick="return confirm('¿Eliminar este producto?')">
+
+Eliminar
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

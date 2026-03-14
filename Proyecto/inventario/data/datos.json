@@ -1,0 +1,17 @@
+[
+    {
+        "nombre": "tortilla de harina de trigo",
+        "precio": "0.50",
+        "cantidad": "20"
+    },
+    {
+        "nombre": "tortilla de harina de maiz",
+        "precio": "0.50",
+        "cantidad": "20"
+    },
+    {
+        "nombre": "chocolate caliente",
+        "precio": "1.00",
+        "cantidad": "15"
+    }
+]
