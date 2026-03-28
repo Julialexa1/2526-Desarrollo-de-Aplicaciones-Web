@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>📦 Lista de Productos (MySQL)</h2>
+
+<a href="{{ url_for('crear') }}" class="btn">➕ Nuevo Producto</a>
+<a href="{{ url_for('pdf') }}" class="btn">📄 Generar PDF</a>
+<a href="{{ url_for('generar_pdf') }}">📄 Descargar PDF</a>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Stock</th>
+        <th>Acciones</th>
+    </tr>
+
+    {% for p in productos %}
+    <tr>
+        <td>{{ p.id_producto }}</td>
+        <td>{{ p.nombre }}</td>
+        <td>${{ p.precio }}</td>
+        <td>{{ p.stock }}</td>
+        <td>
+            <a href="{{ url_for('editar', id=p.id_productos) }}">✏️ Editar</a>
+            <a href="{{ url_for('eliminar_crud', id=p.id_productos) }}">❌ Eliminar</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

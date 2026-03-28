@@ -4,9 +4,33 @@ import json
 import csv
 import os
 from conexion.conexion import obtener_conexion
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from werkzeug.security import generate_password_hash, check_password_hash
+from models import obtener_usuario_por_email, obtener_usuario_por_id
+from services.producto_service import *
+from forms.producto_form import leer_formulario
+from fpdf import FPDF
+from services.producto_service import listar
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+from flask import send_file
+import io
+from flask import make_response
+from flask_login import login_required
 
 app = Flask(__name__)
 app.secret_key = "rosita-2026"
+
+# ===============================
+# CONFIG LOGIN
+# ===============================
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+@login_manager.user_loader
+def load_user(user_id):
+    return obtener_usuario_por_id(user_id)
 
 inv = Inventario()
 
@@ -30,6 +54,64 @@ def index():
     )
     return render_template("index.html", titulo="Inicio | Cafetería Rosita", descripcion=descripcion)
 
+# ===============================
+# LOGIN
+# ===============================
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        usuario = obtener_usuario_por_email(email)
+
+        if usuario and check_password_hash(usuario.password, password):
+            login_user(usuario)
+            flash("Bienvenido 👋", "success")
+            return redirect(url_for("index"))
+        else:
+            flash("Correo o contraseña incorrectos", "danger")
+
+    return render_template("login.html")
+
+# ===============================
+# REGISTRO
+# ===============================
+@app.route("/registro", methods=["GET", "POST"])
+def registro():
+
+    if request.method == "POST":
+        nombre = request.form["nombre"]
+        email = request.form["email"]
+        password = generate_password_hash(request.form["password"])
+
+        conexion = obtener_conexion()
+        cursor = conexion.cursor()
+
+        cursor.execute(
+            "INSERT INTO usuarios(nombre,email,password) VALUES(%s,%s,%s)",
+            (nombre, email, password)
+        )
+
+        conexion.commit()
+        cursor.close()
+        conexion.close()
+
+        flash("Usuario registrado correctamente", "success")
+        return redirect(url_for("login"))
+
+    return render_template("registro.html")
+
+# ===============================
+# LOGOUT
+# ===============================
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("Sesión cerrada", "success")
+    return redirect(url_for("login"))
 
 # ===============================
 # PRODUCTOS
@@ -52,6 +134,7 @@ def about():
 # INVENTARIO CRUD (SQLite)
 # ===============================
 @app.route('/inventario', methods=['GET', 'POST'])
+@login_required
 def inventario():
 
     if request.method == 'POST':
@@ -79,6 +162,7 @@ def inventario():
 # EDITAR PRODUCTO
 # ===============================
 @app.route('/producto/editar/<int:id>', methods=['GET', 'POST'])
+@login_required
 def editar_producto(id):
 
     producto = inv.obtener_por_id(id)
@@ -111,6 +195,7 @@ def editar_producto(id):
 # ELIMINAR PRODUCTO
 # ===============================
 @app.route('/producto/eliminar/<int:id>')
+@login_required
 def eliminar_producto(id):
 
     inv.eliminar(id)
@@ -124,6 +209,7 @@ def eliminar_producto(id):
 # GUARDAR DATOS EN TXT, JSON Y CSV
 # =================================================
 @app.route("/guardar_datos", methods=["POST"])
+@login_required
 def guardar_datos():
 
     nombre = request.form["nombre"]
@@ -212,6 +298,7 @@ def datos():
 # MYSQL
 # =================================================
 @app.route("/mysql/agregar_producto", methods=["POST"])
+@login_required
 def mysql_agregar_producto():
 
     conexion = obtener_conexion()
@@ -240,6 +327,7 @@ def mysql_agregar_producto():
 
 
 @app.route("/mysql/productos")
+@login_required
 def mysql_productos():
 
     conexion = obtener_conexion()
@@ -256,6 +344,7 @@ def mysql_productos():
 
 
 @app.route("/mysql/eliminar/<int:id>")
+@login_required
 def mysql_eliminar(id):
 
     conexion = obtener_conexion()
@@ -272,6 +361,131 @@ def mysql_eliminar(id):
 
     return redirect(url_for("mysql_productos"))
 
+# ===============================
+# CRUD MYSQL NUEVO
+# ===============================
+
+@app.route("/crud")
+@login_required
+def crud():
+    productos = listar()
+    return render_template("crud/listar.html", productos=productos)
+
+
+@app.route("/crud/crear", methods=["GET", "POST"])
+@login_required
+def crear():
+
+    if request.method == "POST":
+        datos = leer_formulario(request)
+        insertar(datos["nombre"], datos["precio"], datos["stock"])
+        flash("Producto creado", "success")
+        return redirect(url_for("crud"))
+
+    return render_template("crud/crear.html")
+
+
+@app.route("/crud/editar/<int:id>", methods=["GET", "POST"])
+@login_required
+def editar(id):
+
+    if request.method == "POST":
+        datos = leer_formulario(request)
+        actualizar(id, datos["nombre"], datos["precio"], datos["stock"])
+        flash("Actualizado", "success")
+        return redirect(url_for("crud"))
+
+    producto = obtener(id)
+    return render_template("crud/editar.html", producto=producto)
+
+
+@app.route("/crud/eliminar/<int:id>")
+@login_required
+def eliminar_crud(id):
+    eliminar(id)
+    flash("Eliminado", "success")
+    return redirect(url_for("crud"))
+
+# ===============================
+# REPORTE PDF
+# ===============================
+
+@app.route("/pdf")
+@login_required
+def pdf():
+
+    productos = listar()
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    pdf.cell(200, 10, txt="REPORTE PRODUCTOS", ln=True)
+
+    for p in productos:
+        pdf.cell(200, 10, txt=f"{p['nombre']} - ${p['precio']} - Stock: {p['stock']}", ln=True)
+
+    pdf.output("reporte.pdf")
+
+    return "PDF generado correctamente"
+
+
+@app.route("/reporte/pdf")
+@login_required
+def generar_pdf():
+
+    conexion = obtener_conexion()
+    cursor = conexion.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM productos")
+    productos = cursor.fetchall()
+
+    cursor.close()
+    conexion.close()
+
+    pdf = FPDF()
+    pdf.add_page()
+
+    # ====== TÍTULO ======
+    pdf.set_font("Arial", "B", 16)
+    pdf.cell(0, 10, "REPORTE DE PRODUCTOS", ln=True, align="C")
+
+    pdf.ln(5)
+
+    # ====== SUBTÍTULO ======
+    pdf.set_font("Arial", "", 10)
+    pdf.cell(0, 10, "Cafetería Rosita", ln=True, align="C")
+
+    pdf.ln(10)
+
+    # ====== ENCABEZADO TABLA ======
+    pdf.set_font("Arial", "B", 10)
+
+    pdf.cell(20, 10, "ID", border=1, align="C")
+    pdf.cell(60, 10, "Nombre", border=1, align="C")
+    pdf.cell(30, 10, "Precio", border=1, align="C")
+    pdf.cell(30, 10, "Stock", border=1, align="C")
+    pdf.ln()
+
+    # ====== FILAS ======
+    pdf.set_font("Arial", "", 10)
+
+    for p in productos:
+        pdf.cell(20, 10, str(p["id_producto"]), border=1, align="C")
+        pdf.cell(60, 10, p["nombre"], border=1)
+        pdf.cell(30, 10, f"${p['precio']}", border=1, align="C")
+        pdf.cell(30, 10, str(p["stock"]), border=1, align="C")
+        pdf.ln()
+
+    # ====== PIE DE PÁGINA ======
+    pdf.ln(10)
+    pdf.set_font("Arial", "I", 8)
+    pdf.cell(0, 10, "Generado automáticamente - Cafetería Rosita", align="C")
+
+    response = make_response(pdf.output(dest="S").encode("latin-1"))
+    response.headers.set("Content-Type", "application/pdf")
+    response.headers.set("Content-Disposition", "attachment", filename="reporte_productos.pdf")
+
+    return response
 
 # ===============================
 # INICIAR APP

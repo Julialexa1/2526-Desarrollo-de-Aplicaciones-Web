@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div style="max-width:400px; margin:auto; margin-top:40px; text-align:center;">
+
+  <h2>🔐 Iniciar Sesión</h2>
+
+  <form method="POST">
+
+    <input type="email" name="email" placeholder="Correo" required
+      style="width:100%; padding:10px; margin:10px 0;">
+
+    <input type="password" name="password" placeholder="Contraseña" required
+      style="width:100%; padding:10px; margin:10px 0;">
+
+    <button type="submit"
+      style="width:100%; padding:10px; background:#8b5a2b; color:white; border:none;">
+      Ingresar
+    </button>
+
+  </form>
+
+  <p style="margin-top:10px;">
+    ¿No tienes cuenta?
+    <a href="{{ url_for('registro') }}">Regístrate aquí</a>
+  </p>
+
+</div>
+
+{% endblock %}

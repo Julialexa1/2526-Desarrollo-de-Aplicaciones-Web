@@ -6,29 +6,52 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <header>
-    <h1>☕ Cafetería Rosita</h1>
-    <nav>
-      <a href="{{ url_for('index') }}">Inicio</a>
-      <a href="{{ url_for('productos') }}">Productos</a>
-      <a href="{{ url_for('inventario') }}">Inventario</a>
-      <a href="{{ url_for('about') }}">Acerca de</a>
-      <a href="/datos">Persistencia de Datos</a>
-      <a href="/mysql/productos">MySQL Productos</a>
-    </nav>
-  </header>
 
-  <main>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% for category, msg in messages %}
-        <div class="flash {{ category }}">{{ msg }}</div>
-      {% endfor %}
-    {% endwith %}
-    {% block content %}{% endblock %}
-  </main>
+<header>
+  <h1>☕ Cafetería Rosita</h1>
 
-  <footer>
-    <p>📍 Caluma, Bolívar — Cafetería Rosita | © 2026</p>
-  </footer>
+  <nav>
+  <a href="{{ url_for('index') }}">Inicio</a>
+  <a href="{{ url_for('productos') }}">Productos</a>
+  <a href="{{ url_for('about') }}">Acerca de</a>
+
+  {% if current_user.is_authenticated %}
+    <a href="{{ url_for('inventario') }}">Inventario</a>
+    <a href="{{ url_for('datos') }}">Datos</a>
+    <a href="{{ url_for('mysql_productos') }}">MySQL</a>
+  {% else %}
+    <a href="{{ url_for('login') }}">Login</a>
+    <a href="{{ url_for('registro') }}">Registro</a>
+  {% endif %}
+  <a href="{{ url_for('crud') }}">CRUD</a>
+<a href="{{ url_for('pdf') }}">PDF</a>
+</nav>
+
+  <div style="margin-top:10px;">
+    {% if current_user.is_authenticated %}
+      <span>👋 {{ current_user.nombre }}</span>
+      <a href="{{ url_for('logout') }}">Cerrar sesión</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('registro') }}">Registro</a>
+    {% endif %}
+  </div>
+
+</header>
+
+<main>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for category, msg in messages %}
+      <div class="flash {{ category }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer>
+  <p>📍 Caluma, Bolívar — Cafetería Rosita | © 2026</p>
+</footer>
+
 </body>
 </html>
